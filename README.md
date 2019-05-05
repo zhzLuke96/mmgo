@@ -27,16 +27,12 @@ func main(){
 }
 ```
 
-# API USAGE
+# API_USAGE
 - [NewCtx(name, coll string) *MgoDB](#NewCtx)
 - [SetName(name string)](#SetName_SetCollection)
 - [IsEmpty() bool](#IsEmpty)
-- [Count(query interface{}) (int, error)](#Count)
 - [SetName(name string) ](#SetName)
 - [SetCollection(name string) ](#SetCollection)
-- [connect() (*mgo.Session, *mgo.Collection) ](#connect)
-- [getDb() (*mgo.Session, *mgo.Database) ](#getDb)
-- [IsEmpty() bool ](#IsEmpty)
 - [Count(query interface{}) (int, error) ](#Count)
 - [Insert(docs ...interface{}) error ](#Insert)
 - [FindOne(query, selector, result interface{}) error ](#FindOne)
@@ -68,14 +64,18 @@ func main(){
 
 
 
-#### NewCtx
+### NewCtx
+[top](#API_USAGE)
+
 > NewCtx(name, coll string) *MgoDB
 
 ```golang
 var Coll = mmgo.NewCtx("test", "coll1")
 ```
 
-#### SetName_SetCollection
+### SetName_SetCollection
+[top](#API_USAGE)
+
 > SetName(name string) <br>
 > SetCollection(name string)
 
@@ -85,7 +85,9 @@ Coll.SetName("test1")
 // Coll.SetCollection("coll")
 ```
 
-#### IsEmpty
+### IsEmpty
+[top](#API_USAGE)
+
 > (m *MgoDB) IsEmpty() bool
 
 ```golang
@@ -98,145 +100,200 @@ if Coll.IsEmpty() {
 ```
 
 ### Count 
+[top](#API_USAGE)
+
 > Count(query interface{}) (int, error)  
 ```golang
 ```
 
 ### Insert 
+[top](#API_USAGE)
+
 > Insert(docs ...interface{}) error  
 ```golang
 ```
 
 ### FindOne 
+[top](#API_USAGE)
+
 > FindOne(query, selector, result interface{}) error  
 ```golang
 ```
 
 ### FindAll 
+[top](#API_USAGE)
+
 > FindAll(query, selector, result interface{}) error  
 ```golang
 ```
 
 ### FindPage 
+[top](#API_USAGE)
+
 > FindPage(page, limit int, query, selector, result interface{}) error  
 ```golang
 ```
 
 ### FindIter 
+[top](#API_USAGE)
+
 > FindIter(query interface{}) *mgo.Iter  
 ```golang
 ```
 
 ### Update 
+[top](#API_USAGE)
+
 > Update(selector, update interface{}) error  
 ```golang
 ```
 
 ### Upsert 
+[top](#API_USAGE)
+
 > Upsert(selector, update interface{}) error  
 ```golang
 ```
 
 ### UpdateAll 
+[top](#API_USAGE)
+
 > UpdateAll(selector, update interface{}) error  
 ```golang
 ```
 
 ### Remove 
+[top](#API_USAGE)
+
 > Remove(selector interface{}) error  
 ```golang
 ```
 
 ### RemoveAll 
+[top](#API_USAGE)
+
 > RemoveAll(selector interface{}) error  
 ```golang
 ```
 
 ### RemoveRepeat 
+[top](#API_USAGE)
+
 > RemoveRepeat(selector interface{})  
 ```golang
 ```
 
 ### RemoveRepeatByKey 
+[top](#API_USAGE)
+
 > RemoveRepeatByKey(key string)  
 ```golang
 ```
 
 ### BulkInsert 
+[top](#API_USAGE)
+
 > BulkInsert(docs ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### BulkRemove 
+[top](#API_USAGE)
+
 > BulkRemove(selector ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### BulkRemoveAll 
+[top](#API_USAGE)
+
 > BulkRemoveAll(selector ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### BulkUpdate 
+[top](#API_USAGE)
+
 > BulkUpdate(pairs ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### BulkUpdateAll 
+[top](#API_USAGE)
+
 > BulkUpdateAll(pairs ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### BulkUpsert 
+[top](#API_USAGE)
+
 > BulkUpsert(pairs ...interface{}) (*mgo.BulkResult, error)  
 ```golang
 ```
 
 ### PipeAll 
+[top](#API_USAGE)
+
 > PipeAll(pipeline, result interface{}, allowDiskUse bool) error  
 ```golang
 ```
 
 ### PipeOne 
+[top](#API_USAGE)
+
 > PipeOne(pipeline, result interface{}, allowDiskUse bool) error  
 ```golang
 ```
 
 ### PipeIter 
+[top](#API_USAGE)
+
 > PipeIter(pipeline interface{}, allowDiskUse bool) *mgo.Iter  
 ```golang
 ```
 
 ### Explain 
+[top](#API_USAGE)
+
 > Explain(pipeline, result interface{}) error  
 ```golang
 ```
 
 ### GridFSCreate 
+[top](#API_USAGE)
+
 > GridFSCreate(prefix, name string) (*mgo.GridFile, error)  
 ```golang
 ```
 
 ### GridFSFindOne 
+[top](#API_USAGE)
+
 > GridFSFindOne(prefix string, query, result interface{}) error  
 ```golang
 ```
 
 ### GridFSFindAll 
+[top](#API_USAGE)
+
 > GridFSFindAll(prefix string, query, result interface{}) error  
 ```golang
 ```
 
 ### GridFSOpen 
+[top](#API_USAGE)
+
 > GridFSOpen(prefix, name string) (*mgo.GridFile, error)  
 ```golang
 ```
 
 ### GridFSRemove 
+[top](#API_USAGE)
+
 > GridFSRemove(prefix, name string) error  
 ```golang
 ```
-
 
 
 
