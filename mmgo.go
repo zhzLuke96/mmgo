@@ -97,6 +97,16 @@ func (m *MgoDB) getDb() (*mgo.Session, *mgo.Database, error) {
 	return ms, ms.DB(db), nil
 }
 
+func (m *MgoDB) IsLive() bool {
+	if m.inited {
+		return true
+	}
+	if m.init() == nil {
+		return true
+	}
+	return false
+}
+
 func (m *MgoDB) IsEmpty() bool {
 	ms, c, err := m.connect()
 	if err != nil {
