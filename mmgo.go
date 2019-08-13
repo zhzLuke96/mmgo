@@ -30,8 +30,8 @@ func NewEmptyCtx() *MgoDB {
 
 func NewCtx(name, coll string) *MgoDB {
 	ctx := &MgoDB{
-		CurrentDBcollection: name,
-		CurrentDBname:       coll,
+		CurrentDBcollection: coll,
+		CurrentDBname:       name,
 		inited:              false,
 	}
 	if ctx.init() == nil {
@@ -167,6 +167,16 @@ func (m *MgoDB) FindPage(page, limit int, query, selector, result interface{}) e
 	defer ms.Close()
 
 	return c.Find(query).Select(selector).Skip(page * limit).Limit(limit).All(result)
+}
+
+func (m *MgoDB) FindPageReverse(page, limit int, query, selector, result interface{}) error {
+	ms, c, err := m.connect()
+	if err != nil {
+		return err
+	}
+	defer ms.Close()
+
+	return c.Find(query).Sort("-_id").Select(selector).Skip(page * limit).Limit(limit).All(result)
 }
 
 func (m *MgoDB) FindIter(query interface{}) (*mgo.Iter, error) {

@@ -1,25 +1,28 @@
 # mmgo
+> opp in mgo package.
+
 mgo package package.
 
 # Usage
 ```golang
 // NewCtx - (dbName ,collectionName )
 var Coll1 = mmgo.NewCtx("test", "coll1")
+var Coll2 = mmgo.NewCtx("article", "p1")
 
 func main(){
-    Coll1.Insert(&map[string]interface{}{
+    Coll1.Insert(bson.M{
 		"name": "alice",
 		"age":  12,
 		"info": "996",
     })
-    Coll1.Insert(&map[string]interface{}{
+    Coll1.Insert(bson.M{
 		"name": "bob",
 		"age":  20,
 		"info": "996",
     })
     
-    var collection = []map[string]interface{}
-    err := testColl.FindAll(nil, nil, &collection)
+    var collection = []bson.M
+    err := Coll2.FindAll(nil, nil, &collection)
     if err != nil {
         log.Fatal(err)
     }
