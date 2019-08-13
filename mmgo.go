@@ -8,6 +8,8 @@ import (
 	mgo "gopkg.in/mgo.v2"
 )
 
+// mgo object
+// 储存数据库访问的上下文
 type MgoDB struct {
 	CurrentDBname       string
 	CurrentDBcollection string
@@ -15,19 +17,27 @@ type MgoDB struct {
 	inited bool
 }
 
+// mgo.Session
+// 每次连接都会克隆这个对象，代表新的DB连接
 var mgoSession *mgo.Session
 
+// 全局上下文，本来想写成可以默认对某个数据库进行访问
+// 逻辑过于复杂和冗余，删去了
 // var gloabal_ctx = NewEmptyCtx()
 
-func NewEmptyCtx() *MgoDB {
-	ctx := &MgoDB{
-		CurrentDBcollection: "",
-		CurrentDBname:       "",
-	}
-	ctx.init()
-	return ctx
-}
+// create empty mgodb context
+// 几乎无用，理由同上
+// func NewEmptyCtx() *MgoDB {
+// 	ctx := &MgoDB{
+// 		CurrentDBcollection: "",
+// 		CurrentDBname:       "",
+// 	}
+// 	ctx.init()
+// 	return ctx
+// }
 
+// create new context
+// 参数分别是数据库key值，和集合名称
 func NewCtx(name, coll string) *MgoDB {
 	ctx := &MgoDB{
 		CurrentDBcollection: coll,
@@ -40,6 +50,8 @@ func NewCtx(name, coll string) *MgoDB {
 	return ctx
 }
 
+// init context
+// 保证连接有效，产生error表示无法正常连接数据库
 func (m *MgoDB) init() error {
 	var err error
 	if mgoAuthUser != "" && mgoAuthPassword != "" {
@@ -62,14 +74,20 @@ func (m *MgoDB) init() error {
 	return err
 }
 
+// change db context db name
+// 修改数据库名称，除特殊不建议使用
 func (m *MgoDB) SetName(name string) {
 	m.CurrentDBname = name
 }
 
+// change db context collection name
+// 修改数据库名称，除特殊不建议使用
 func (m *MgoDB) SetCollection(name string) {
 	m.CurrentDBcollection = name
 }
 
+// all of first call
+// 所有调用过程均会经过这里
 func (m *MgoDB) connect() (*mgo.Session, *mgo.Collection, error) {
 	db := m.CurrentDBname
 	collection := m.CurrentDBcollection
@@ -85,6 +103,7 @@ func (m *MgoDB) connect() (*mgo.Session, *mgo.Collection, error) {
 	return ms, c, nil
 }
 
+// get *mgo.Database, Provide a call to some special function
 func (m *MgoDB) getDb() (*mgo.Session, *mgo.Database, error) {
 	db := m.CurrentDBname
 	//
@@ -97,6 +116,8 @@ func (m *MgoDB) getDb() (*mgo.Session, *mgo.Database, error) {
 	return ms, ms.DB(db), nil
 }
 
+// return mgo context context state
+// 判断能否与数据库连接
 func (m *MgoDB) IsLive() bool {
 	if m.inited {
 		return true
@@ -107,6 +128,8 @@ func (m *MgoDB) IsLive() bool {
 	return false
 }
 
+// return collection ture/false rmpty
+// 判断是否在操作一个空集合
 func (m *MgoDB) IsEmpty() bool {
 	ms, c, err := m.connect()
 	if err != nil {
@@ -120,6 +143,7 @@ func (m *MgoDB) IsEmpty() bool {
 	return count == 0
 }
 
+// 根据查询返回个数
 func (m *MgoDB) Count(query interface{}) (int, error) {
 	ms, c, err := m.connect()
 	if err != nil {
@@ -129,6 +153,7 @@ func (m *MgoDB) Count(query interface{}) (int, error) {
 	return c.Find(query).Count()
 }
 
+// 插入操作，可一次插入多个文档
 func (m *MgoDB) Insert(docs ...interface{}) error {
 	ms, c, err := m.connect()
 	if err != nil {
